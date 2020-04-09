@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.main.MainFragment">
+
+    <TextView
+        android:id="@+id/main_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/main_date"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="PAVLODAR" />
+
+    <TextView
+        android:id="@+id/main_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/main_name"
+        tools:text="Sunday, 24 April" />
+
+    <ImageView
+        android:id="@+id/main_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/weather_icon"
+        app:layout_constraintBottom_toTopOf="@id/main_temp"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/main_date"
+        tools:src="@drawable/i01d_high" />
+
+    <TextView
+        android:id="@+id/main_temp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="80sp"
+        app:layout_constraintTop_toBottomOf="@id/main_icon"
+        app:layout_constraintBottom_toTopOf="@id/main_description"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        tools:text="24C" />
+
+    <TextView
+        android:id="@+id/main_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/main_humidity_label"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/main_temp"
+        tools:text="Clear" />
+
+    <TextView
+        android:id="@+id/main_humidity_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:labelFor="@id/main_humidity"
+        android:text="@string/humidity"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/main_humidity"
+        app:layout_constraintEnd_toStartOf="@id/main_wind_label"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/main_description" />
+
+    <TextView
+        android:id="@+id/main_humidity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/main_forecast"
+        app:layout_constraintEnd_toEndOf="@id/main_humidity_label"
+        app:layout_constraintStart_toStartOf="@id/main_humidity_label"
+        app:layout_constraintTop_toBottomOf="@id/main_humidity_label"
+        tools:text="15 %" />
+
+    <TextView
+        android:id="@+id/main_wind_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/wind"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/main_humidity_label"
+        app:layout_constraintEnd_toStartOf="@id/main_clouds_label"
+        app:layout_constraintStart_toEndOf="@id/main_humidity_label"
+        app:layout_constraintTop_toTopOf="@id/main_humidity_label" />
+
+    <TextView
+        android:id="@+id/main_wind"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/main_humidity"
+        app:layout_constraintEnd_toEndOf="@id/main_wind_label"
+        app:layout_constraintStart_toStartOf="@id/main_wind_label"
+        app:layout_constraintTop_toTopOf="@id/main_humidity"
+        tools:text="12 km/h" />
+
+    <TextView
+        android:id="@+id/main_clouds_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/clouds"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/main_humidity_label"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toEndOf="@id/main_wind_label"
+        app:layout_constraintTop_toTopOf="@id/main_humidity_label" />
+
+    <TextView
+        android:id="@+id/main_clouds"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/main_humidity"
+        app:layout_constraintEnd_toEndOf="@id/main_clouds_label"
+        app:layout_constraintStart_toStartOf="@id/main_clouds_label"
+        app:layout_constraintTop_toTopOf="@id/main_humidity"
+        tools:text="12 km/h" />
+
+    <FrameLayout
+        android:id="@+id/main_forecast"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/main_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/main_humidity" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
