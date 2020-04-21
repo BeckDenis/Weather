@@ -21,4 +21,7 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     return logger
 }
 
-fun provideForecastApi(retrofit: Retrofit): WeatherApi = retrofit.create(WeatherApi::class.java)
+fun provideWeatherApi(retrofit: Retrofit): WeatherApi = retrofit.create(WeatherApi::class.java)
+
+fun provideForecastApi(retrofit: Retrofit): ForecastApi = retrofit.create(ForecastApi::class.java)
+

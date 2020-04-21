@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.denisbeck.weather.screens.main.MainFragment"
-        android:label="fragment_main"
+        android:label=" "
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
@@ -17,6 +17,16 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.denisbeck.weather.screens.detail.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        android:label="{name}"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="weather"
+            app:argType="com.denisbeck.weather.models.DayWeather" />
+        <argument
+            android:name="city"
+            app:argType="com.denisbeck.weather.models.City" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>
