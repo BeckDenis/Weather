@@ -1,20 +1,25 @@
 package com.denisbeck.weather.screens.main
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.denisbeck.weather.R
-import com.denisbeck.weather.extensions.fullDate
 import com.denisbeck.weather.extensions.isDay
-import com.denisbeck.weather.models.DayWeather
+import com.denisbeck.weather.extensions.saveLocation
+import com.denisbeck.weather.extensions.toCity
 import com.denisbeck.weather.models.ForecastData
 import com.denisbeck.weather.models.WeatherData
 import com.denisbeck.weather.networking.*
@@ -22,6 +27,8 @@ import com.denisbeck.weather.repository.getForecastRepository
 import com.denisbeck.weather.repository.getWeatherRepository
 import com.denisbeck.weather.utils.setColorText
 import com.denisbeck.weather.utils.weatherIconHighQ
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -33,11 +40,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val viewModel by activityViewModels<MainViewModel> {
         MainViewModelFactory(getWeatherRepository(), getForecastRepository())
     }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkSharedPref()
-        viewModel.updateLastLocation("pavlodar")
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+//        checkSharedPref()
+//        checkPermission()
+        updateLastLocation("pavlodar")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,12 +58,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun checkSharedPref() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val lastSearchedLocation =
-            sharedPref.getString(getString(R.string.last_location_searched_key), "")
-        if (!lastSearchedLocation.isNullOrBlank()) lastLocation(lastSearchedLocation)
+        val lastSearchedLocation = sharedPref.getString(getString(R.string.last_location_searched_key), "")
+        if (!lastSearchedLocation.isNullOrBlank()) updateLastLocation(lastSearchedLocation)
     }
 
-    private fun lastLocation(location: String) = viewModel.updateLastLocation(location)
+    private fun updateLastLocation(location: String) = viewModel.updateLastLocation(location)
 
     private fun statusWeatherActions(it: Resource<WeatherData>) {
         when (it.status) {
@@ -96,14 +105,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     .actionMainFragmentToDetailFragment(weather, it.city, it.city.name)
                 findNavController().navigate(action)
             }
-        }
-    }
-
-    private fun saveLocation(location: String) {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        sharedPref.edit().run {
-            putString(getString(R.string.last_location_searched_key), location)
-            commit()
         }
     }
 
@@ -169,6 +170,43 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
+    private fun checkPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d(TAG, "checkPermission: true")
+            getLastLocation()
+        } else {
+            Log.d(TAG, "checkPermission: else")
+            requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                getString(R.string.location_key).toInt()
+            )
+        }
+    }
+
+    private fun getLastLocation() {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                Log.d(TAG, "getLastLocation: success")
+                location?.let {
+                    Log.d(TAG, "getLastLocation: location is not null")
+                    viewModel.lastUserLocation = location.toCity(context)
+                    val action = MainFragmentDirections.actionMainFragmentToCurrentLocationDialog()
+                    findNavController().navigate(action)
+                } ?: Toast.makeText(requireContext(), R.string.off_gps_message, Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "getLastLocation: ${it.message}")
+                Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+    }
 
 }
 

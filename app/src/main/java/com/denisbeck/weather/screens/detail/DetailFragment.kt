@@ -34,9 +34,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         detail_icon.setImageDrawable(context?.getDrawable(weatherIconHighQ(args.weather.weather.first().icon)))
         detail_temp.text = getString(R.string.temp, args.weather.main.temp)
         detail_description.text = args.weather.weather.first().description
-        detail_humidity.text = getString(R.string.humidity, args.weather.main.humidity)
-        detail_wind.text = getString(R.string.wind, args.weather.wind.speed)
-        detail_clouds.text = getString(R.string.clouds, args.weather.clouds.all)
+        detail_humidity.text = getString(R.string.humidity_detail, args.weather.main.humidity)
+        detail_wind.text = getString(R.string.wind_detail, args.weather.wind.speed)
+        detail_clouds.text = getString(R.string.clouds_detail, args.weather.clouds.all)
         detail_time.text = (args.weather.dt + args.city.timezone).verticalTime()
     }
 

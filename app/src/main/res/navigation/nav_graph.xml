@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_currentLocationDialog"
+            app:destination="@id/currentLocationDialog" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -29,4 +32,8 @@
             android:name="name"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/currentLocationDialog"
+        android:name="com.denisbeck.weather.screens.main.CurrentLocationDialog"
+        android:label="CurrentLocationDialog" />
 </navigation>

@@ -4,9 +4,10 @@ import androidx.lifecycle.*
 import com.denisbeck.weather.networking.Resource
 import com.denisbeck.weather.repository.ForecastRepository
 import com.denisbeck.weather.repository.WeatherRepository
-import java.util.*
 
 class MainViewModel(private val weatherRepo: WeatherRepository, private val forecastRepo: ForecastRepository) : ViewModel() {
+
+    var lastUserLocation: String? = null
 
     private val location = MutableLiveData<String>()
 
