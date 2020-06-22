@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 
 import com.denisbeck.weather.R
-import com.denisbeck.weather.extensions.time
 import com.denisbeck.weather.extensions.isDay
 import com.denisbeck.weather.extensions.verticalTime
 import com.denisbeck.weather.utils.setColorText
@@ -47,7 +46,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
             if (isDay) {
                 color = ContextCompat.getColor(it, R.color.text)
-                background = it.getDrawable(R.drawable.app_background)
+                background = it.getDrawable(R.drawable.app_background_day)
             } else {
                 color = ContextCompat.getColor(it, R.color.text_night)
                 background = it.getDrawable(R.drawable.app_background_night)

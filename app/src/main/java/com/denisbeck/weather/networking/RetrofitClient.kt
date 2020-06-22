@@ -11,8 +11,11 @@ fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         .addConverterFactory(GsonConverterFactory.create()).build()
 }
 
-fun provideOkHttpClient(authInterceptor: AuthInterceptor, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-    return OkHttpClient().newBuilder().addInterceptor(authInterceptor).addInterceptor(loggingInterceptor).build()
+fun provideOkHttpClient(
+    authInterceptor: AuthInterceptor, loggingInterceptor: HttpLoggingInterceptor
+): OkHttpClient {
+    return OkHttpClient().newBuilder().addInterceptor(authInterceptor)
+        .addInterceptor(loggingInterceptor).build()
 }
 
 fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -21,7 +24,9 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     return logger
 }
 
-fun provideWeatherApi(retrofit: Retrofit): WeatherApi = retrofit.create(WeatherApi::class.java)
+fun provideCurrentWeatherApi(retrofit: Retrofit): WeatherApi {
+    return retrofit.create(WeatherApi::class.java)
+}
 
 fun provideForecastApi(retrofit: Retrofit): ForecastApi = retrofit.create(ForecastApi::class.java)
 

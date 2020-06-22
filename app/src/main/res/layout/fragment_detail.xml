@@ -5,6 +5,7 @@
     android:id="@+id/detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background_night"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".screens.detail.DetailFragment">
@@ -86,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="@id/detail_left_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detail_description"
-        tools:text="@string/humidity_detail" />
+        tools:text="50" />
 
     <com.denisbeck.weather.views.SquareTextView
         android:id="@+id/detail_wind"

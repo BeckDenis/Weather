@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_container"
+    android:background="@drawable/app_background_day"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.main.MainFragment">
@@ -33,13 +34,13 @@
         android:id="@+id/main_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="20dp"
         android:contentDescription="@string/weather_icon"
         app:layout_constraintBottom_toTopOf="@id/main_temp"
         app:layout_constraintEnd_toEndOf="@id/main_end_guideline"
         app:layout_constraintStart_toStartOf="@id/main_start_guideline"
         app:layout_constraintTop_toBottomOf="@id/main_date"
-        tools:src="@drawable/i01d_high" />
+        tools:src="@drawable/i01n_high" />
 
     <TextView
         android:id="@+id/main_temp"

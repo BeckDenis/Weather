@@ -23,9 +23,4 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp() = navController.navigateUp()
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        val window: Window = window
-        window.setFormat(PixelFormat.RGBA_8888)
-    }
 }
