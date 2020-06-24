@@ -20,8 +20,11 @@
     </string>
     <string name="clouds_label">Clouds</string>
     <string name="clouds">%d %%</string>
-    <string name="temp">\u0020%.1f°</string>
+    <string name="temp">\u0020%d°</string>
+    <string name="search_weather">%s %d°</string>
     <string name="weather_icon">weather icon</string>
     <string name="off_gps_message">We cannot get your location. You may need to enable GPS on your phone</string>
     <string name="search_hint">Enter your city name</string>
+    <string name="delete">Delete</string>
+    <string name="auto_locate">Auto-Locate</string>
 </resources>

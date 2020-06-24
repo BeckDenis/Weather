@@ -13,7 +13,7 @@ class MainViewModel(private val weatherRepository: WeatherRepository) : ViewMode
 
     private val location = MutableLiveData<String>()
 
-    fun updateLastLocation(input: String?) {
+    fun updateLocation(input: String?) {
         input?.let {
             Log.d(TAG, "updateLastLocation: $it")
             location.value = it

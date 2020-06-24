@@ -21,7 +21,13 @@ data class WeatherData(
 data class ForecastData(val list: List<DayWeather>, val city: City)
 
 @Parcelize
-data class DayWeather(val main: Main, val weather: List<Weather>, val dt: Long, val clouds: Clouds, val wind: Wind) : Parcelable
+data class DayWeather(
+    val main: Main,
+    val weather: List<Weather>,
+    val dt: Long,
+    val clouds: Clouds,
+    val wind: Wind
+) : Parcelable
 
 @Parcelize
 data class Weather(
@@ -42,4 +48,7 @@ data class City(
 ) : Parcelable
 
 @Parcelize
-data class Main(val temp: Double, val humidity: Int) : Parcelable
+data class Main(val temp: Double, val humidity: Int) : Parcelable {
+    val tempInt: Int
+        get() = temp.toInt()
+}

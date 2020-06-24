@@ -1,13 +1,11 @@
 package com.denisbeck.weather.screens.main
 
 import android.annotation.SuppressLint
-import android.location.Location
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.PagerSnapHelper
 import com.denisbeck.weather.R
 import com.denisbeck.weather.extensions.*
 import com.denisbeck.weather.models.ForecastData
@@ -30,13 +28,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        checkSharedPref()
-        getLastLocation()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        main_name.setOnClickListener { goToSearchFragment() }
+        main_search.setOnClickListener { goToSearchFragment() }
+        getLocation()
         viewModel.run {
             weather.observe(viewLifecycleOwner, Observer { statusWeatherActions(it) })
             forecast.observe(viewLifecycleOwner, Observer { statusForecastActions(it) })
@@ -46,11 +43,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun goToSearchFragment() {
         val action = MainFragmentDirections.actionMainFragmentToSearchFragment()
         findNavController().navigate(action)
-    }
-
-    private fun checkSharedPref() {
-        val lastLocation = preferences.getLastLocation()
-        if (!lastLocation.isNullOrBlank()) viewModel.updateLastLocation(lastLocation)
     }
 
     private fun statusWeatherActions(it: Resource<WeatherData>) {
@@ -63,11 +55,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun showWeather(it: Resource<WeatherData>) {
         main_weather_progress_bar.visibility = View.GONE
-        it.data?.let {
-            setStyle((it.dt + it.timezone).isDay())
-            updateViews(it)
-            preferences.storeLastLocation(it.name)
+        it.data?.let {weatherData ->
+            setStyle((weatherData.dt + weatherData.timezone).isDay())
+            updateViews(weatherData)
+            updatePreferences(weatherData.name)
         }
+    }
+
+    private fun updatePreferences(location: String) {
+        preferences.storeSelectedLocation(location)
+        preferences.storeSavedLocations(location)
     }
 
     private fun statusForecastActions(it: Resource<ForecastData>) {
@@ -97,7 +94,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         main_name.text = weatherData.name
         main_date.text = weatherData.date
         main_icon.setImageDrawable(context?.getDrawable(weatherIconHighQ(weatherData.weather.first().icon)))
-        main_temp.text = getString(R.string.temp, weatherData.main.temp)
+        main_temp.text = getString(R.string.temp, weatherData.main.tempInt)
         main_description.text = weatherData.weather.first().description
         main_humidity.text = getString(R.string.humidity, weatherData.main.humidity)
         main_wind.text = getString(R.string.wind, weatherData.wind.speed)
@@ -115,14 +112,25 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             style.colorSecondary,
             main_date, main_description, main_humidity, main_wind, main_clouds
         )
-        main_container.background = style.background
+        main_container.setBackgroundResource(style.background)
+        main_search.insertDrawable(style.addIcon)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == locationPermissionCode && allPermissionsGranted(grantResults)) {
-            getLastLocation()
+            getLocation()
         }
+    }
+
+
+    private fun getLocation() {
+        if (preferences.getAutoLocate()) {
+            getLastLocation()
+        } else {
+            viewModel.updateLocation(preferences.getSelectedLocation())
+        }
+
     }
 
     @SuppressLint("MissingPermission")
@@ -131,13 +139,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location ->
                     location?.let {
-                        viewModel.updateLastLocation(location.toCity(context))
-                    } ?: showToast(R.string.off_gps_message)
+                        viewModel.updateLocation(location.toCity(context))
+                    } ?: offGps()
                 }
                 .addOnFailureListener {
+                    viewModel.updateLocation(preferences.getSelectedLocation())
                     showToast(it.localizedMessage)
                 }
         }
+    }
+
+    private fun offGps() {
+        showToast(R.string.off_gps_message)
+        viewModel.updateLocation(preferences.getSelectedLocation())
     }
 
 }

@@ -31,7 +31,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun updateViews() {
         detail_icon.setImageDrawable(context?.getDrawable(weatherIconHighQ(args.weather.weather.first().icon)))
-        detail_temp.text = getString(R.string.temp, args.weather.main.temp)
+        detail_temp.text = getString(R.string.temp, args.weather.main.tempInt)
         detail_description.text = args.weather.weather.first().description
         detail_humidity.text = getString(R.string.humidity_detail, args.weather.main.humidity)
         detail_wind.text = getString(R.string.wind_detail, args.weather.wind.speed)
@@ -45,7 +45,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             val background: Drawable?
 
             if (isDay) {
-                color = ContextCompat.getColor(it, R.color.text)
+                color = ContextCompat.getColor(it, R.color.text_day)
                 background = it.getDrawable(R.drawable.app_background_day)
             } else {
                 color = ContextCompat.getColor(it, R.color.text_night)
