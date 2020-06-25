@@ -7,9 +7,11 @@ import java.util.*
 fun Long.isDay() = Calendar.getInstance().apply {
     timeZone = TimeZone.getTimeZone("GMT")
     time = Date(this@isDay * 1000)
-}.get(Calendar.HOUR_OF_DAY) in 7..21
+}.get(Calendar.HOUR_OF_DAY) in 6..21
 
-fun Long.fullDate(): String = DateFormat.getDateInstance(DateFormat.FULL).format(this * 1000)
+fun Long.fullDate(): String = DateFormat.getDateInstance(DateFormat.FULL).apply {
+    timeZone = TimeZone.getTimeZone("GMT")
+}.format(this * 1000)
 
 fun Long.shortDate(): String = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).apply {
     timeZone = TimeZone.getTimeZone("GMT")

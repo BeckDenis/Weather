@@ -1,7 +1,6 @@
 package com.denisbeck.weather.utils
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.denisbeck.weather.R
@@ -19,6 +18,7 @@ class Style(isDay: Boolean, private val context: Context) {
 
 
     val addIcon = if (isDay) R.drawable.ic_add_day else R.drawable.ic_add_night
+    val backIcon = if (isDay) R.drawable.ic_back_day else R.drawable.ic_back_night
 
 }
 

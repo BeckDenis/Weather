@@ -7,8 +7,41 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_background_night"
     android:orientation="vertical"
-    android:padding="15dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
     tools:context=".screens.detail.DetailFragment">
+
+    <ImageView
+        android:background="?android:attr/actionBarItemBackground"
+        android:id="@+id/detail_back"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="@string/back"
+        android:padding="7dp"
+        android:src="@drawable/ic_back_night"
+        app:layout_constraintBottom_toBottomOf="@id/top_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textColor="@color/text_night"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/detail_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/detail_back"
+        app:layout_constraintTop_toTopOf="@id/detail_back"
+        tools:text="Pavlodar" />
+
 
     <com.denisbeck.weather.views.SquareImageView
         android:id="@+id/detail_icon"
@@ -17,7 +50,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:contentDescription="@string/weather_icon"
         android:padding="12dp"
         android:src="@drawable/i10n_high"
@@ -33,7 +66,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_weight="1"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:gravity="center"
         android:maxLines="1"
         android:textSize="38sp"
@@ -49,9 +82,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:gravity="center"
-        android:textSize="60sp"
+        android:textSize="38sp"
         app:layout_constraintBottom_toBottomOf="@id/detail_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/detail_right_guideline"
@@ -65,7 +98,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:gravity="center"
         android:maxLines="1"
         android:textSize="26sp"
@@ -81,7 +114,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:gravity="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/detail_left_guideline"
@@ -96,7 +129,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:gravity="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/detail_right_guideline"
@@ -111,7 +144,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/transparent_bg"
+        android:background="@drawable/forecast_bg"
         android:gravity="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,6 +172,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="41dp" />
+        app:layout_constraintGuide_begin="48dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

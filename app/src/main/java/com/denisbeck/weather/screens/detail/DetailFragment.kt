@@ -1,15 +1,14 @@
 package com.denisbeck.weather.screens.detail
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
-
 import com.denisbeck.weather.R
+import com.denisbeck.weather.extensions.insertDrawable
 import com.denisbeck.weather.extensions.isDay
 import com.denisbeck.weather.extensions.verticalTime
+import com.denisbeck.weather.utils.Style
 import com.denisbeck.weather.utils.setColorText
 import com.denisbeck.weather.utils.weatherIconHighQ
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -20,6 +19,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        detail_back.setOnClickListener { requireActivity().onBackPressed() }
         showWeather()
     }
 
@@ -37,32 +37,23 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         detail_wind.text = getString(R.string.wind_detail, args.weather.wind.speed)
         detail_clouds.text = getString(R.string.clouds_detail, args.weather.clouds.all)
         detail_time.text = (args.weather.dt + args.city.timezone).verticalTime()
+        detail_name.text = args.name
     }
 
     private fun setStyle(isDay: Boolean) {
-        context?.let {
-            val color: Int
-            val background: Drawable?
-
-            if (isDay) {
-                color = ContextCompat.getColor(it, R.color.text_day)
-                background = it.getDrawable(R.drawable.app_background_day)
-            } else {
-                color = ContextCompat.getColor(it, R.color.text_night)
-                background = it.getDrawable(R.drawable.app_background_night)
-            }
-
-            setColorText(
-                color,
-                detail_temp,
-                detail_time,
-                detail_description,
-                detail_humidity,
-                detail_wind,
-                detail_clouds
-            )
-
-            detail_container.background = background
-        }
+        val style = Style(isDay, requireContext())
+        detail_back.insertDrawable(style.backIcon)
+        detail_container.setBackgroundResource(style.background)
+        setColorText(
+            style.colorPrimary,
+            detail_name,
+            detail_temp,
+            detail_time,
+            detail_description,
+            detail_humidity,
+            detail_wind,
+            detail_clouds
+        )
     }
+
 }

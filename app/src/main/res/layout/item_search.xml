@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?android:selectableItemBackground"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -34,6 +37,7 @@
             tools:text="Pavlodar" />
 
         <TextView
+            android:textColor="@color/text_secondary_night"
             android:id="@+id/item_search_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,6 +48,7 @@
 
 
     <ImageView
+        android:background="?android:attr/actionBarItemBackground"
         android:id="@+id/item_search_delete"
         android:layout_width="48dp"
         android:layout_height="48dp"

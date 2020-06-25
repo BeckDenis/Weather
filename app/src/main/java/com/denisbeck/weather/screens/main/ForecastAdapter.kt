@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.denisbeck.weather.R
 import com.denisbeck.weather.extensions.insertDrawable
+import com.denisbeck.weather.extensions.isDay
 import com.denisbeck.weather.extensions.time
 import com.denisbeck.weather.extensions.shortDate
 import com.denisbeck.weather.models.DayWeather
@@ -18,6 +19,8 @@ class ForecastAdapter(
     val onClickListener: (DayWeather) -> Unit
 ) : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
+    var isDay = true
+
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +32,7 @@ class ForecastAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val weather = forecast.list[position]
+        if (position == 0 && !(weather.dt + forecast.city.timezone).isDay()) isDay = false
         holder.view.run {
             item_forecast_date.text = (weather.dt + forecast.city.timezone).shortDate()
             item_forecast_time.text = (weather.dt + forecast.city.timezone).time()

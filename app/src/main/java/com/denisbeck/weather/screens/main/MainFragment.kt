@@ -55,7 +55,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun showWeather(it: Resource<WeatherData>) {
         main_weather_progress_bar.visibility = View.GONE
-        it.data?.let {weatherData ->
+        it.data?.let { weatherData ->
             setStyle((weatherData.dt + weatherData.timezone).isDay())
             updateViews(weatherData)
             updatePreferences(weatherData.name)
@@ -116,7 +116,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         main_search.insertDrawable(style.addIcon)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == locationPermissionCode && allPermissionsGranted(grantResults)) {
             getLocation()
@@ -130,7 +134,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         } else {
             viewModel.updateLocation(preferences.getSelectedLocation())
         }
-
     }
 
     @SuppressLint("MissingPermission")
